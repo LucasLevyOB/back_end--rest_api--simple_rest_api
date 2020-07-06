@@ -1,0 +1,12 @@
+{
+    "name": "lucaslevy/simple-rest-api-php",
+    "description": "A simple API Rest built with PHP, which will be consumed by an Angular application.",
+    "authors": [
+        {
+            "name": "Lucas Levy",
+            "email": "oliveiralucaslevy@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
