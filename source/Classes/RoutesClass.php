@@ -9,7 +9,7 @@ class RoutesClass
     {
         $this->routes = array(
             '' => 'Error400Controller',
-            'produtos' => 'ProductController'
+            'produto' => 'ProductController'
         );
     }
 

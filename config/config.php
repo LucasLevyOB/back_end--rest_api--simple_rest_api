@@ -10,7 +10,7 @@ if(substr($_SERVER['DOCUMENT_ROOT'], -1) == '/'){
 }
 
 // access to database
-define('HOST', 'localhost');
-define('DB', '');
-define('USER', 'lucaslevy');
-define('PASS', 'lucaslevy');
+define('HOSTNAME', 'localhost');
+define('DATABASENAME', 'simpleRestAPIPHP');
+define('USERNAME', 'lucaslevy');
+define('PASSWORD', 'lucaslevy');

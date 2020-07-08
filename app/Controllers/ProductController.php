@@ -1,12 +1,16 @@
 <?php
 namespace Controllers;
 
-class ProductController
+use Models\ProductModel;
+
+class ProductController extends ProductModel
 {
     private string $requestMethod;
     
     public function __construct()
     {
-        echo $this->requestMethod = $_SERVER['REQUEST_METHOD'];
+        var_dump($this->get());
+        // echo $this->requestMethod = $_SERVER['REQUEST_METHOD'];
     }
+
 }

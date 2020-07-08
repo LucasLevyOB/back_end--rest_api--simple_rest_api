@@ -27,11 +27,13 @@ class RouteDispatherClass extends RoutesClass
                 return $this->routes[$this->initialIndex];
             } else {
                 header('HTTP/1.1 500 Internal Server Error');
-                json_encode(array('response' => 'Desculpe sua requisicao nao pode ser atendida.'));
+                echo json_encode(array('response' => 'Desculpe sua requisicao nao pode ser atendida.'));
+                exit;
             }
         } else {
             header('HTTP/1.1 400 Bad Request');
-            json_encode(array('response' => 'Requisicao incorreta.'));
+            echo json_encode(array('response' => 'Requisicao incorreta.'));
+            exit;
         }
     }
 
