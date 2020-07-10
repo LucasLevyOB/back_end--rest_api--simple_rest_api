@@ -3,10 +3,15 @@ namespace Classes;
 
 use Classes\RoutesClass;
 use Traits\UrlParserTrait;
+use Traits\VerificationTrait;
+use Traits\MessageHTTPTrait;
 
 class RouteDispatherClass extends RoutesClass
 {
     use UrlParserTrait;
+    use VerificationTrait;
+    use MessageHTTPTrait;
+
     private array $routes;
     private array $url;
     private string $initialIndex;
@@ -21,19 +26,16 @@ class RouteDispatherClass extends RoutesClass
 
     private function verifyRoute()
     {
-        if (array_key_exists($this->initialIndex, $this->routes)) {
-            $this->archive = DIRREC. "app/Controllers/{$this->routes[$this->initialIndex]}.php";
-            if (file_exists($this->archive)) {
+        if ($this->verifyKeyExistsInArray($this->initialIndex, $this->routes)) {
+            $fileController = $this->routes[$this->initialIndex]. '.php';
+            $pathToFile = DIRREC. 'app/Controllers/';
+            if ($this->verifyFileExists($fileController, $pathToFile)) {
                 return $this->routes[$this->initialIndex];
             } else {
-                header('HTTP/1.1 500 Internal Server Error');
-                echo json_encode(array('response' => 'Desculpe sua requisicao nao pode ser atendida.'));
-                exit;
+                return 'Error500Controller';
             }
         } else {
-            header('HTTP/1.1 400 Bad Request');
-            echo json_encode(array('response' => 'Requisicao incorreta.'));
-            exit;
+            return 'Error400Controller';
         }
     }
 
