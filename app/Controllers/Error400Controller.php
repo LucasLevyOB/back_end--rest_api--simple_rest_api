@@ -11,6 +11,6 @@ class Error400Controller
     {
         $header = 'HTTP/1.1 400 Bad Request';
         $response = 'Requisicao incorreta.';
-        $this->sendMessage($header, $response);
+        $this->sendMessageErrors($header, $response);
     }
 }

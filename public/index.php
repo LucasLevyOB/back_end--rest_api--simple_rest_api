@@ -5,8 +5,13 @@ require_once('../vendor/autoload.php');
 
 use Classes\DispatchClass;
 
+// error_reporting(1);
+
+// header("Content-Type: application/json; charset=UTF-8"); 
+
 if (isset($_SERVER['HTTP_ORIGIN'])) {
-    header('Access-Control-Allow-Origin: http://localhost:4200');
+    // header('Access-Control-Allow-Origin: http://localhost:4200');
+    header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Allow-Methods: POST,GET,PUT,DELETE');
     header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
@@ -31,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $controller = new DispatchClass();
-echo "<pre>";
+echo '<pre>';
 return $controller->addController();
-// var_dump($teste->addController());
-echo "</pre>";
+echo '</pre>';

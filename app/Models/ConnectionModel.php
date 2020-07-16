@@ -3,11 +3,11 @@ namespace Models;
 
 use PDO;
 
-abstract class ConnectionModel
+class ConnectionModel
 {
     private \PDO $connection;
 
-    protected function connectToDatabase()
+    public function connectToDatabase()
     {
         try {
             $dsn = 'mysql:dbname='. DATABASENAME. ';host='. HOSTNAME;

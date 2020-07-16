@@ -2,14 +2,15 @@
 namespace Classes;
 
 use Classes\RoutesClass;
+
 use Traits\UrlParserTrait;
-use Traits\VerificationTrait;
+use Traits\ValidationTrait;
 use Traits\MessageHTTPTrait;
 
 class RouteDispatherClass extends RoutesClass
 {
     use UrlParserTrait;
-    use VerificationTrait;
+    use ValidationTrait;
     use MessageHTTPTrait;
 
     private array $routes;
@@ -24,12 +25,12 @@ class RouteDispatherClass extends RoutesClass
         $this->initialIndex = $this->url[0];
     }
 
-    private function verifyRoute()
+    private function checkRoute()
     {
-        if ($this->verifyKeyExistsInArray($this->initialIndex, $this->routes)) {
+        if ($this->checkKeyExistsInArray($this->initialIndex, $this->routes)) {
             $fileController = $this->routes[$this->initialIndex]. '.php';
             $pathToFile = DIRREC. 'app/Controllers/';
-            if ($this->verifyFileExists($fileController, $pathToFile)) {
+            if ($this->checkFileExists($fileController, $pathToFile)) {
                 return $this->routes[$this->initialIndex];
             } else {
                 return 'Error500Controller';
@@ -42,6 +43,6 @@ class RouteDispatherClass extends RoutesClass
     public function getRoute()
     {
         $this->initializeValues();
-        return $this->verifyRoute();
+        return $this->checkRoute();
     }
 }

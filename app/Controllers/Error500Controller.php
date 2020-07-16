@@ -11,6 +11,6 @@ class Error500Controller
     {
         $header = 'HTTP/1.1 500 Internal Server Error';
         $response = 'Desculpe sua requisicao nao pode ser atendida.';
-        $this->sendMessage($header, $response);
+        $this->sendMessageErrors($header, $response);
     }
 }
