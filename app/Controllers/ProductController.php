@@ -4,6 +4,7 @@ namespace Controllers;
 use Traits\MessageHTTPTrait;
 // use Models\ProductModel;
 use Models\PostModel;
+use Models\GetModel;
 use Models\ProductModel;
 use Models\ProductValidationModel;
 
@@ -47,7 +48,8 @@ class ProductController
                 $this->sendMessageErrors($header, $response);
                 break;
             case 'GET':
-                // return $this->get();
+                $this->requiredMethod = new GetModel();
+                return var_dump($this->requiredMethod->get());
                 break;
             case 'PUT':
                 // return $this->put();
