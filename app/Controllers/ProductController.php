@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Traits\MessageHTTPTrait;
+use Traits\UrlParserTrait;
 // use Models\ProductModel;
 use Models\PostModel;
 use Models\GetModel;
@@ -11,6 +12,7 @@ use Models\ProductValidationModel;
 class ProductController
 {
     use MessageHTTPTrait;
+    use UrlParserTrait;
 
     private string $requestMethod;
     private $requiredMethod;
@@ -18,6 +20,7 @@ class ProductController
     private int $receivedId;
     private ProductValidationModel $validation;
     private int $success;
+    private $productId;
     
     public function __construct()
     {
@@ -48,8 +51,29 @@ class ProductController
                 $this->sendMessageErrors($header, $response);
                 break;
             case 'GET':
+                $this->validation = new ProductValidationModel();
+                $this->productId = $this->getIdUrl($this->parseUrl());
                 $this->requiredMethod = new GetModel();
-                return var_dump($this->requiredMethod->get());
+                if ($this->validation->validateID($this->productId)) {
+                    $dataReceivedDB = $this->requiredMethod->get($this->productId);
+                    if (!$dataReceivedDB) {
+                        $header = 'HTTP/1.1 200 OK';
+                        $response = 'Nenhum produto encontrado.';
+                        $this->sendMessageErrors($header, $response);
+                    }
+                    $header = 'HTTP/1.1 200 OK';
+                    $response = 'Produto encontrado.';
+                    $this->sendData($header, $response, $dataReceivedDB);
+                }
+                $dataReceivedDB = $this->requiredMethod->get();
+                if (!$dataReceivedDB) {
+                    $header = 'HTTP/1.1 200 OK';
+                    $response = 'Nenhum produto encontrado.';
+                    $this->sendMessageErrors($header, $response);
+                }
+                $header = 'HTTP/1.1 200 OK';
+                $response = 'Produtos encontrados.';
+                $this->sendData($header, $response, $dataReceivedDB);
                 break;
             case 'PUT':
                 // return $this->put();

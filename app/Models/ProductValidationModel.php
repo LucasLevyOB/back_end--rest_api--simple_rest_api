@@ -71,4 +71,9 @@ class ProductValidationModel
 
         return $data;
     }
+
+    public function validateID($id)
+    {
+        return $this->checkIsInt($id) && $id > 0;
+    }
 }

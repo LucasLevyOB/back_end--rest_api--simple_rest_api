@@ -68,7 +68,7 @@ trait ValidationTrait
     }
 
     // int validations
-    public function checkIsInt(int $int)
+    public function checkIsInt($int)
     {
         return filter_var($int, FILTER_VALIDATE_INT);
     }

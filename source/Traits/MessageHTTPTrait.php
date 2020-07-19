@@ -13,4 +13,11 @@ trait MessageHTTPTrait
         echo json_encode(array('response' => $response));
         exit;
     }
+
+    public function sendData(string $header, string $response, $data)
+    {
+        header($header);
+        echo json_encode(array('response' => $response, 'data' => $data));
+        exit;
+    }
 }
