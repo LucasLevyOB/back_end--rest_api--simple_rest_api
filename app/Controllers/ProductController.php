@@ -7,6 +7,7 @@ use Traits\UrlParserTrait;
 use Models\PostModel;
 use Models\GetModel;
 use Models\PutModel;
+use Models\DeleteModel;
 use Models\ProductModel;
 use Models\ProductValidationModel;
 
@@ -102,7 +103,21 @@ class ProductController
                 $this->sendMessageErrors($header, $response);
                 break;
             case 'DELETE':
-                // return $this->delete();
+                $this->validation = new ProductValidationModel();
+                $this->productId = $this->getIdUrl($this->parseUrl());
+                $this->validation->checkID($this->productId);
+                $this->validation->checkExistsErrors();
+                $this->productId = $this->validation->validateId($this->productId);
+                $this->requiredMethod = new DeleteModel();
+                $this->success = $this->requiredMethod->delete($this->productId);
+                if ($this->success == true) {
+                    $header = 'HTTP/1.1 200 OK';
+                    $response = 'Produto deletado com sucesso!';
+                    $this->sendMessageErrors($header, $response);
+                }
+                $header = 'HTTP/1.1 500 Internal Server Error';
+                $response = 'Desculpe sua requisicao nao pode ser atendida.';
+                $this->sendMessageErrors($header, $response);
                 break;
             default:
                 return 'aaaaa';
