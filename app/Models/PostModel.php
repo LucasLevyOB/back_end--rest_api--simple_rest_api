@@ -17,7 +17,7 @@ class PostModel extends MethodsHttpModel
         $this->prepare = $this->connection->connectToDatabase()->prepare($this->query);
         $this->prepare->bindParam(':pro_name', $receivedData->pro_name, \PDO::PARAM_STR);
         $this->prepare->bindParam(':pro_price', $receivedData->pro_price, \PDO::PARAM_STR);
-        $this->success = $this->prepare->execute();
+        $this->prepare->execute();
         return $this->prepare->rowCount();
     }
 }

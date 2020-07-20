@@ -6,6 +6,7 @@ use Traits\UrlParserTrait;
 // use Models\ProductModel;
 use Models\PostModel;
 use Models\GetModel;
+use Models\PutModel;
 use Models\ProductModel;
 use Models\ProductValidationModel;
 
@@ -41,20 +42,23 @@ class ProductController
                 $this->product->setReceivedData($this->validation->validateData($this->product->getReceivedData()));
                 $this->requiredMethod = new PostModel();
                 $this->success = $this->requiredMethod->post($this->product->getReceivedData());
-                if ($this->success == 0) {
-                    $header = 'HTTP/1.1 500 Internal Server Error';
-                    $response = 'Desculpe sua requisicao nao pode ser atendida.';
+                if ($this->success == true) {
+                    $header = 'HTTP/1.1 201 Created';
+                    $response = 'Produto inserido com sucesso!';
                     $this->sendMessageErrors($header, $response);
                 }
-                $header = 'HTTP/1.1 201 Created';
-                $response = 'Produto inserido com sucesso!';
+                $header = 'HTTP/1.1 500 Internal Server Error';
+                $response = 'Desculpe sua requisicao nao pode ser atendida.';
                 $this->sendMessageErrors($header, $response);
                 break;
             case 'GET':
                 $this->validation = new ProductValidationModel();
                 $this->productId = $this->getIdUrl($this->parseUrl());
                 $this->requiredMethod = new GetModel();
-                if ($this->validation->validateID($this->productId)) {
+                if (filter_var($this->productId, FILTER_VALIDATE_INT)) {
+                    $this->validation->checkID($this->productId);
+                    $this->validation->checkExistsErrors();
+                    $this->productId = $this->validation->validateId($this->productId);
                     $dataReceivedDB = $this->requiredMethod->get($this->productId);
                     if (!$dataReceivedDB) {
                         $header = 'HTTP/1.1 200 OK';
@@ -76,7 +80,26 @@ class ProductController
                 $this->sendData($header, $response, $dataReceivedDB);
                 break;
             case 'PUT':
-                // return $this->put();
+                $receivedData = json_decode(file_get_contents('php://input', false));
+                $this->validation = new ProductValidationModel();
+                $this->productId = $this->getIdUrl($this->parseUrl());
+                $this->product = new ProductModel($receivedData, $this->productId);
+                $this->validation->checkID($this->product->getReceivedId());
+                $this->validation->checkDataIsNull($this->product->getReceivedData());
+                $this->validation->checkData($this->product->getReceivedData());
+                $this->validation->checkExistsErrors();
+                $this->product->setReceivedId($this->validation->validateId($this->product->getReceivedId()));
+                $this->product->setReceivedData($this->validation->validateData($this->product->getReceivedData()));
+                $this->requiredMethod = new PutModel();
+                $this->success = $this->requiredMethod->put($this->product->getReceivedId(), $this->product->getReceivedData());
+                if ($this->success == true) {
+                    $header = 'HTTP/1.1 201 Created';
+                    $response = 'Produto atualizado com sucesso!';
+                    $this->sendMessageErrors($header, $response);
+                }
+                $header = 'HTTP/1.1 500 Internal Server Error';
+                $response = 'Desculpe sua requisicao nao pode ser atendida.';
+                $this->sendMessageErrors($header, $response);
                 break;
             case 'DELETE':
                 // return $this->delete();

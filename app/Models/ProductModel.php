@@ -8,16 +8,12 @@ class ProductModel implements ProductInterface
     private $receivedData;
     private int $receivedId;
 
-    public function __construct($receivedData)
+    public function __construct($receivedData, $receivedId = 0)
     {
         $this->receivedData = $receivedData;
+        $this->receivedId = $receivedId;
     }
-
-    protected function validateReceivedData($receivedData)
-    {
-
-    }
-
+    
     public function getReceivedData()
     {
         return $this->receivedData;
@@ -26,5 +22,15 @@ class ProductModel implements ProductInterface
     public function setReceivedData(object $receivedData)
     {
         $this->receivedData = $receivedData;
+    }
+
+    public function getReceivedId()
+    {
+        return $this->receivedId;
+    }
+
+    public function setReceivedId($receivedId)
+    {
+        $this->receivedId = $receivedId;
     }
 }
