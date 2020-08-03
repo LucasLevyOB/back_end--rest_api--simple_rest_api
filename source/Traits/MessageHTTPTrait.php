@@ -17,7 +17,7 @@ trait MessageHTTPTrait
     public function sendData(string $header, string $response, $data)
     {
         header($header);
-        echo json_encode(array('response' => $response, 'data' => $data));
+        echo json_encode($data);
         exit;
     }
 }

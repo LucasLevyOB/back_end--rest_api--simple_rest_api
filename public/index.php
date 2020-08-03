@@ -7,7 +7,7 @@ use Classes\DispatchClass;
 
 // error_reporting(1);
 
-// header("Content-Type: application/json; charset=UTF-8"); 
+header("Content-Type: application/json; charset=UTF-8"); 
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // header('Access-Control-Allow-Origin: http://localhost:4200');
@@ -36,6 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $controller = new DispatchClass();
-echo '<pre>';
+// echo '<pre>';
 return $controller->addController();
-echo '</pre>';
+// echo '</pre>';
