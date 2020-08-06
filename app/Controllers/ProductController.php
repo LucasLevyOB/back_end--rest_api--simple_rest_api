@@ -37,6 +37,9 @@ class ProductController
                 $receivedData = json_decode(file_get_contents('php://input', false));
                 $this->product = new ProductModel($receivedData);
                 $this->validation = new ProductValidationModel();
+                $this->validation->checkFields($receivedData, 'pro_name');
+                $this->validation->checkFields($receivedData, 'pro_price');
+                $this->validation->checkExistsErrors();
                 $this->validation->checkDataIsNull($this->product->getReceivedData());
                 $this->validation->checkData($this->product->getReceivedData());
                 $this->validation->checkExistsErrors();
@@ -83,6 +86,9 @@ class ProductController
             case 'PUT':
                 $receivedData = json_decode(file_get_contents('php://input', false));
                 $this->validation = new ProductValidationModel();
+                $this->validation->checkFields($receivedData, 'pro_name');
+                $this->validation->checkFields($receivedData, 'pro_price');
+                $this->validation->checkExistsErrors();
                 $this->productId = $this->getIdUrl($this->parseUrl());
                 $this->product = new ProductModel($receivedData, $this->productId);
                 $this->validation->checkID($this->product->getReceivedId());

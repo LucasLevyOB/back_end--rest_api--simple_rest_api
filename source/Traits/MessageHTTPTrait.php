@@ -7,7 +7,7 @@ trait MessageHTTPTrait
     {
         header($header);
         if ($errors != null) {
-            echo json_encode(array('response' => $response, 'fields' => $errors));
+            echo json_encode(array('response' => $response, 'error' => $errors));
             exit;
         }
         echo json_encode(array('response' => $response));
@@ -17,7 +17,7 @@ trait MessageHTTPTrait
     public function sendData(string $header, string $response, $data)
     {
         header($header);
-        echo json_encode($data);
+        echo json_encode(array('response' => $response, 'data' => $data));
         exit;
     }
 }

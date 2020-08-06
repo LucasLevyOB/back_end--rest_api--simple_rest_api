@@ -3,6 +3,11 @@ namespace Traits;
 
 trait ValidationTrait
 {
+    protected function checkKeyExistsInObject($keySearched, object $objectVerified)
+    {
+        return property_exists($objectVerified, $keySearched);
+    }
+
     protected function checkKeyExistsInArray($keySearched, array $arrayVerified)
     {
         return array_key_exists($keySearched, $arrayVerified);

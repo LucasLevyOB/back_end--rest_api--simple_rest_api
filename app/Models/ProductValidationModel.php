@@ -22,7 +22,7 @@ class ProductValidationModel
     {
         if (count($this->errors->getErrors()) > 0) {
             $header = 'HTTP/1.1 400 Bad Request';
-            $response = 'Há campos inválidos.';
+            $response = 'Desculpe houve um erro.';
             $errors = $this->errors->getErrors();
             return $this->sendMessageErrors($header, $response, $errors);
             exit;
@@ -38,25 +38,30 @@ class ProductValidationModel
         }
     }
 
+    public function checkFields(object $data, $field)
+    {
+        if (!$this->checkKeyExistsInObject($field, $data)) {
+            $this->errors->setErrors('O campo '. $field. ' está incorreto');
+        }
+    }
+
     public function checkData(object $data)
     {
         if (!$this->checkIsString($data->pro_name)) {
-            $this->errors->setErrors('pro_name');
+            $this->errors->setErrors('pro_name deve ser uma string');
         } else {
             if (!$this->checkMinimunLenghtString(3, $data->pro_name)) {
-                $this->errors->setErrors('pro_name');
+                $this->errors->setErrors('pro_name deve ser maior que 3');
             }
         }
         
         if (!$this->checkIsFloat($data->pro_price)) {
-            $this->errors->setErrors('pro_price');
+            $this->errors->setErrors('pro_price deve ser float');
         } else {
             if (!$this->checkMinimunValueFloat(0, $data->pro_price)) {
-                $this->errors->setErrors('pro_price');
+                $this->errors->setErrors('pro_price dever ser maior que 0');
             }
         }
-
-        // return $data;
     }
 
     public function validateData(object $data)
