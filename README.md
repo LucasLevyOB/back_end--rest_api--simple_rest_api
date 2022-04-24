@@ -2,6 +2,8 @@
 
 Este projeto consiste em uma API Rest simples de um CRUD de produtos. Essa API foi construída para ser consumida pelo projeto [CRUD em Angular](https://github.com/LucasLevyOB/front_end--project--simple_angular_crud).
 
+**\*Projeto desenvolvido entre 06 de Julho de 2020 e 06 de Agosto de 2020**
+
 ## Tecnologias utilizadas
 
 1. PHP
